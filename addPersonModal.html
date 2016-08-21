@@ -1,0 +1,25 @@
+<script type="text/ng-template" id="addPersonModal.html">
+ <div class="modal-header">
+     <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+ </div>
+ <div class="modal-body" id="modal-body">
+   <form ng-submit="addPerson()">
+     <input type="text" placeholder="name" ng-model="newPerson.name"/>
+     <input type="text" placeholder="job" ng-model="newPerson.job"/>
+     <input type="text" placeholder="age" ng-model="newPerson.age"/>
+     <input type="text" placeholder="nick" ng-model="newPerson.nick"/>
+     <input type="text" placeholder="employee" ng-model="newPerson.employee"/>
+     <div class="modal-footer">
+         <button class="btn btn-primary" type="submit" ng-click="ok()">OK</button>
+         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+     </div>
+   </form>
+     <!-- <ul>
+         <li ng-repeat="item in items">
+             <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+         </li>
+     </ul>
+     Selected: <b>{{ selected.item }}</b> -->
+ </div>
+
+</script>
