@@ -17,3 +17,12 @@ ___
 * run ```npm install```
 * run ```python -m SimpleHTTPServer```
 * open 'localhost:8000' via browser
+
+___
+
+
+<p align="center">
+  <a href="http://www.codewars.com/users/szepnapot" target="_blank">
+  <img src="https://d2gn4xht817m0g.cloudfront.net/p/product_screenshots/images/preview505/000/155/390/155390-0e6082933ef0647e22246e2791de61a46afb1ec1.jpg?1364103310" height=100px>
+  </a>
+</p>
