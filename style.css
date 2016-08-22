@@ -1,0 +1,16 @@
+textarea {
+    resize: none;
+    box-sizing: content-box;
+}
+
+table, th {
+  border: 1px solid #999;
+}
+
+td {
+  border-left: 1px solid #999;
+}
+
+th {
+  background-color: lightgrey;
+}

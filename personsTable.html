@@ -1,0 +1,36 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        <a href="#" ng-click="sortType = 'person.name'; sortReverse = !sortReverse">
+          Name (job title)
+          <span ng-show="sortType == 'person.name' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'person.name' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>
+        <a href="#" ng-click="sortType = 'person.age'; sortReverse = !sortReverse">
+          Age
+          <span ng-show="sortType == 'person.age' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'person.age' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>Nickname</th>
+      <th>Employee</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="person in persons | orderBy : sortType : sortReverse">
+      <td>{{person.name}} <br> {{person.job}}</td>
+      <td>{{person.age | number}}</td>
+      <td>{{person.nick}}</td>
+      <td>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-checked="person.employee" disabled="disabled">
+          </label>
+      </td>
+      <td ng-click="removePerson(person)"><a href='#'>Delete</a></td>
+  </tbody>
+</table>

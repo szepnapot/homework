@@ -1,38 +1,49 @@
-var app = angular.module('app', ['ui.bootstrap']);
+var app = angular.module('app', ['ui.bootstrap', "googlechart"]);
 
-app.service('personService', function () {
-  var persons = [];
+app.controller('indexController', ['$scope','$http','$log', '$uibModal', function($scope, $http, $log, $uibModal){
+    $scope.persons;
+    $scope.sortType = 'name';
+    $scope.sortReverse = false;
+    $scope.search = '';
+    $scope.showGraph = false;
 
-  var addPerson = function(newPerson) {
-    persons.push(newPerson);
-  };
+   $scope.myChartObject = {};
 
-  var getPersons = function() {
-    return persons;
-  };
+   $scope.myChartObject.type = "ColumnChart";
 
-  var loadPersonsFromFile = function(){
-    $http.get('persons.json')
-          .then(function(res){
-            this.persons = res.data;
-          })
-        };
+   $scope.ageNamePairsData = [];
 
-  return {
-    addPerson: addPerson,
-    getPersons: getPersons,
-    init: loadPersonsFromFile
-  };
+   $scope.fillAgeNamePairsData = function() {
+     for (var i = 0; i < $scope.persons.length; i++) {
+       $scope.ageNamePairsData.push(
+         [{v: $scope.persons[i].name},
+         {v: $scope.persons[i].age}]);
+     }
+    $scope.updateChart();
+   }
 
-});
+   $scope.myChartObject.data = {"cols": [
+       {id: "t", label: "Names", type: "string"},
+       {id: "s", label: "Age", type: "number"}
+   ], "rows": []};
 
-app.controller('indexController', ['$scope','$http','$uibModal', '$log', 'personService', function($scope, $http, $uibModal, $log, personService){
-    $scope.persons = personService.getPersons();
-    // $scope.items = ['item1', 'item2', 'item3'];
-    $scope.animationsEnabled = true;
+   $scope.updateChart = function() {
+     for (var i = 0; i < $scope.ageNamePairsData.length; i++) {
+       $scope.myChartObject.data.rows.push(
+         {c: [$scope.ageNamePairsData[i][0],
+              $scope.ageNamePairsData[i][1]]}
+       )
+     }
+   }
+
+   $scope.myChartObject.options = {
+       'title': 'Age distribution'
+   };
+
     $http.get('persons.json')
           .then(function(res){
             $scope.persons = res.data;
+            $scope.fillAgeNamePairsData();
           });
 
     $scope.removePerson = function(person) {
@@ -44,67 +55,42 @@ app.controller('indexController', ['$scope','$http','$uibModal', '$log', 'person
     $scope.open = function (size) {
 
       var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
+        animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
         templateUrl: 'addPersonModal.html',
         controller: 'ModalInstanceCtrl',
         size: size,
         resolve: {
-          item: function () {
-            return "hey";
+          newPerson: function () {
+            return $scope.newPerson;
           }
         }
       });
 
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
+      modalInstance.result.then(function (newPerson) {
+        $scope.persons.push(newPerson);
+        $scope.fillAgeNamePairsData();
       }, function () {
         $log.info('Modal dismissed at: ' + new Date());
       });
 
     };
 
-    $scope.addPerson = function(){
-        $scope.persons.push({
-          newPerson
-      });
-      for(var prop in $scope.newPerson){
-         if($scope.newPerson.hasOwnProperty(prop)){
-           $scope.newPerson[prop] = '';
-         }
-       };
-    };
-    $scope.addName = function(){
-        $scope.names.push($scope.newName.name);
-      for(var prop in $scope.newName){
-         if($scope.newName.hasOwnProperty(prop)){
-           $scope.newName[prop] = '';
-         }
-       };
-    };
-
     $scope.toggleAnimation = function () {
       $scope.animationsEnabled = !$scope.animationsEnabled;
     };
-
-    $scope.message = "hey all!";
-
-    $scope.names = ['yolo', 'pocok', 'ilka'];
-
 }]);
 
 
-app.controller('ModalInstanceCtrl',['$scope', '$uibModalInstance', 'items', 'personService', function ($scope, $uibModalInstance, personService, items) {
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
+app.controller('ModalInstanceCtrl',['$scope', '$uibModalInstance', 'newPerson', function ($scope, $uibModalInstance, newPerson) {
+  $scope.newPerson = newPerson;
 
   $scope.ok = function () {
-    console.log($scope.newPerson);
-    personService.addPerson($scope.newPerson);
-    $uibModalInstance.close();
+    if (!$scope.newPerson.employee) {
+      $scope.newPerson.employee = false;
+    }
+    $uibModalInstance.close($scope.newPerson);
   };
 
   $scope.cancel = function () {
