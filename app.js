@@ -4,7 +4,6 @@ app.controller('indexController', ['$scope','$http','$log', '$uibModal', functio
     $scope.persons;
     $scope.sortType = 'name';
     $scope.sortReverse = false;
-    $scope.search = '';
     $scope.showGraph = false;
 
    $scope.myChartObject = {};
@@ -40,7 +39,7 @@ app.controller('indexController', ['$scope','$http','$log', '$uibModal', functio
        'title': 'Age distribution'
    };
 
-    $http.get('persons.json')
+    $http.get('./static/persons.json')
           .then(function(res){
             $scope.persons = res.data;
             $scope.fillAgeNamePairsData();

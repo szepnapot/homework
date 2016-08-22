@@ -2,22 +2,22 @@
 <html lang="en" ng-app='app'>
   <head>
     <meta charset="utf-8">
-    <title>Yo, Angular INC!</title>
+    <title>Yo, Angular!</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.1/ui-bootstrap-tpls.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="./static/style.css">
     <script src="./app.js"></script>
   </head>
   <body>
     <div ng-controller="indexController" class="container">
-      <div ng-include="'graph.html'"></div>
-      <header ng-include="'header.html'"></header>
-      <div ng-include="'addPersonModal.html'"></div>
-      <div ng-include="'personsTable.html'"></div>
-      <textarea class="form-control" rows="40">{{ persons | json }}</textarea>
+      <div ng-include="'./views/graph.html'"></div>
+      <header ng-include="'./views/header.html'"></header>
+      <div ng-include="'./views/addPersonModal.html'"></div>
+      <div ng-include="'./views/personsTable.html'"></div>
+      <textarea class="form-control" rows="16" readonly="readonly">{{ persons | json }}</textarea>
     </div>
   </body>
 </html>

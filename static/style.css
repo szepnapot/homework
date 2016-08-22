@@ -1,6 +1,7 @@
 textarea {
-    resize: none;
-    box-sizing: content-box;
+  resize: none;
+  box-sizing: content-box;
+  margin: 50px 0;
 }
 
 table, th {
